@@ -1,0 +1,22 @@
+name: 'My firtsh github action'
+
+on: push
+#어느 시점에서 이 깃헙 액션이 실행되는지 설정하는지. 커맨트 달떄? 푸쉬할 때? -> 이벤트 기반의 워크플로우
+
+jobs: # on 시점에 jobs의 밑에 있는 것들을 쭉 실행시켜라
+  first-job: #build server 중 하나
+    name: 'first job'
+
+    runs-on: ubuntu-latest #macos-latest #windows-latest
+
+    steps: 
+    - name: Say Hello World 1
+      shell: bash
+      run: |
+        echo "Hello World form step 1"
+
+    - name: Sta Hello World 2
+      shell: pwsh
+      run: |
+        echo "Hello world from step 2"
+
