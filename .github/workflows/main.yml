@@ -12,51 +12,16 @@ jobs: # on 시점에 jobs의 밑에 있는 것들을 쭉 실행시켜라
 
     runs-on: ubuntu-latest #macos-latest #windows-latest
 
-    env:
-      JOB_LEVEL_1: 'THIS COMES FROM JOB LEVEL 1'
-
-    steps: 
-    - name: Say Hello World 1
+    step:
+    - name: set output value
+      id: first
       shell: bash
-      env:
-        STEP_LEVEL_1: 'THIS COMES FROM STEP LEVEL 1'
       run: |
-        echo "Hello World form step 1"
-        echo $WORKFLOW_LEVEL
-        echo $JOB_LEVEL_1
-        echo $JOB_LELVE_2
-        echo $STEP_LEVEL_1
-        echo $STEP_LEVEL_2
+        first_value="This is the first output value"
 
-    - name: Sta Hello World 2
-      shell: pwsh
-      run: |
-        echo "Hello world from step 2"
-        
+        echo "::set-output name=my_first_value::$first_value"
 
-  second-job: #build server 중 하나
-    name: 'second job'
-
-    runs-on: ubuntu-latest #macos-latest #windows-latest
-
-    env:
-      JOB_LEVEL_2: 'THIS COMES FROM JOB LEVEL 2'
-
-    steps: 
-    - name: Say Hello World 1
+    - name: get output value
       shell: bash
-      env:
-        STEP_LEVEL_2: 'THIS COMES FROM STEP LEVEL 2'
-      run: |
-        echo "Hello World form step 1"
-        echo $WORKFLOW_LEVEL
-        echo $JOB_LEVEL_1
-        echo $JOB_LELVE_2
-        echo $STEP_LEVEL_1
-        echo $STEP_LEVEL_2
-
-    - name: Sta Hello World 2
-      shell: pwsh
-      run: |
-        echo "Hello world from step 2"
-
+      runt: |
+        echo ${{ steps.firts.outputs.my_first_value }}
