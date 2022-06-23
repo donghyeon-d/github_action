@@ -1,36 +1,62 @@
-# This is a basic workflow to help you get started with Actions
+name: 'My firtsh github action'
 
-name: CI
+on: push
+#어느 시점에서 이 깃헙 액션이 실행되는지 설정하는지. 커맨트 달떄? 푸쉬할 때? -> 이벤트 기반의 워크플로우
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+env: #환경변수를 만듦. 전체에서 가능, jobs 단위에서 가능, step 단위에서 가능. -> scope 단위에서 이루어진다고 보면 될듯
+  WORKFLOW_LEVEL: 'THIS VALUE COMES FROM THE WORKFLOW LEVEL'
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+jobs: # on 시점에 jobs의 밑에 있는 것들을 쭉 실행시켜라
+  first-job: #build server 중 하나
+    name: 'first job'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #macos-latest #windows-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+    env:
+      JOB_LEVEL_1: 'THIS COMES FROM JOB LEVEL 1'
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    steps: 
+    - name: Say Hello World 1
+      shell: bash
+      env:
+        STEP_LEVEL_1: 'THIS COMES FROM STEP LEVEL 1'
+      run: |
+        echo "Hello World form step 1"
+        echo $WORKFLOW_LEVEL
+        echo $JOB_LEVEL_1
+        echo $JOB_LELVE_2
+        echo $STEP_LEVEL_1
+        echo $STEP_LEVEL_2
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    - name: Sta Hello World 2
+      shell: pwsh
+      run: |
+        echo "Hello world from step 2"
+        
+
+  second-job: #build server 중 하나
+    name: 'second job'
+
+    runs-on: ubuntu-latest #macos-latest #windows-latest
+
+    env:
+      JOB_LEVEL_2: 'THIS COMES FROM JOB LEVEL 2'
+
+    steps: 
+    - name: Say Hello World 1
+      shell: bash
+      env:
+        STEP_LEVEL_2: 'THIS COMES FROM STEP LEVEL 2'
+      run: |
+        echo "Hello World form step 1"
+        echo $WORKFLOW_LEVEL
+        echo $JOB_LEVEL_1
+        echo $JOB_LELVE_2
+        echo $STEP_LEVEL_1
+        echo $STEP_LEVEL_2
+
+    - name: Sta Hello World 2
+      shell: pwsh
+      run: |
+        echo "Hello world from step 2"
+
